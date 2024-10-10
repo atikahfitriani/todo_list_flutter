@@ -201,7 +201,7 @@ class _TodoPageState extends State<TodoPage> {
                     Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Colors.white24,
+                        color: Colors.black,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(
