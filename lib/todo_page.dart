@@ -40,6 +40,7 @@ class TodoPage extends StatefulWidget {
 class _TodoPageState extends State<TodoPage> {
   List<Todo> _todoList = [];
   final TextEditingController _textController = TextEditingController();
+  int _remainingTodos = 0;
 
   @override
   void initState() {
@@ -58,6 +59,7 @@ class _TodoPageState extends State<TodoPage> {
               Map<String, dynamic>.from(jsonDecode(todoString));
           return Todo.fromMap(todoMap);
         }).toList();
+        _updateRemainingTodos(); // Update remaining todos on load
       });
     }
   }
@@ -94,6 +96,7 @@ class _TodoPageState extends State<TodoPage> {
                       createdAt: DateTime.now(),
                     ));
                     _saveTodoList();
+                    _updateRemainingTodos(); // Update remaining todos
                   });
                   Navigator.of(context).pop();
                 }
@@ -114,6 +117,7 @@ class _TodoPageState extends State<TodoPage> {
     setState(() {
       _todoList.removeAt(index);
       _saveTodoList();
+      _updateRemainingTodos(); // Update remaining todos
     });
   }
 
@@ -142,6 +146,7 @@ class _TodoPageState extends State<TodoPage> {
                       isChecked: _todoList[index].isChecked,
                     );
                     _saveTodoList();
+                    _updateRemainingTodos(); // Update remaining todos
                   });
                   Navigator.of(context).pop();
                 }
@@ -162,7 +167,12 @@ class _TodoPageState extends State<TodoPage> {
     setState(() {
       _todoList[index].isChecked = !_todoList[index].isChecked;
       _saveTodoList();
+      _updateRemainingTodos(); // Update remaining todos
     });
+  }
+
+  void _updateRemainingTodos() {
+    _remainingTodos = _todoList.where((todo) => !todo.isChecked).length;
   }
 
   String capitalize(String text) {
@@ -200,12 +210,12 @@ class _TodoPageState extends State<TodoPage> {
                     ),
                     Container(
                       padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+                      // decoration: BoxDecoration(
+                      //   color: Colors.black,
+                      //   borderRadius: BorderRadius.circular(5),
+                      // ),
                       child: Text(
-                        '${_todoList.length}',
+                        'Jumlah: $_remainingTodos',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
