@@ -257,12 +257,13 @@ class _TodoPageState extends State<TodoPage> {
                                       children: [
                                         Text(
                                           capitalize(_todoList[index].title),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            decoration:
+                                                _todoList[index].isChecked
+                                                    ? TextDecoration.lineThrough
+                                                    : TextDecoration.none,
+                                          ),
                                         ),
                                         Text(
                                           'Created on: ${_todoList[index].createdAt.day}/${_todoList[index].createdAt.month}/${_todoList[index].createdAt.year} '
